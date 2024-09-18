@@ -13,27 +13,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Restaurant {
-  id        Int        @id @default(autoincrement())
-  name      String
-  foodPacks FoodPack[]
-  votes     Vote[]
+model Employee {
+  id         String @id @default(uuid())
+  employeeId String @unique
+  votes      Vote[] // Tracks votes made by the employee
 }
 
-model FoodPack {
-  id           Int        @id @default(autoincrement())
-  name         String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId Int
-  votes        Vote[]
+model Restaurant {
+  id        String     @id @default(uuid())
+  name      String
+  foodPacks FoodPack[] // One restaurant has many food packs
+  votes     Vote[] // Indirect relation to track votes for food packs within this restaurant
 }
 
 model Vote {
-  id           Int         @id @default(autoincrement())
-  employee     String
+  id           String      @id @default(uuid())
+  employeeId   String
+  foodPackId   String
+  employee     Employee    @relation(fields: [employeeId], references: [id])
   foodPack     FoodPack    @relation(fields: [foodPackId], references: [id])
-  foodPackId   Int
-  createdAt    DateTime    @default(now())
   Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
-  restaurantId Int?
+  restaurantId String?
+}
+
+model FoodPack {
+  id           String     @id @default(uuid())
+  name         String
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  votes        Vote[]
 }
