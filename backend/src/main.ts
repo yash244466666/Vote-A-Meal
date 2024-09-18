@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Median')
-    .setDescription('The Median API description')
+    .setTitle('Vote-A-Meal API')
+    .setDescription('Vote-A-Meal API description')
     .setVersion('0.1')
     .build();
 
