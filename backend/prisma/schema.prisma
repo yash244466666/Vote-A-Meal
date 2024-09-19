@@ -16,30 +16,33 @@ datasource db {
 model Employee {
   id         String @id @default(uuid())
   employeeId String @unique
-  votes      Vote[] // Tracks votes made by the employee
+  votes      Vote[]
 }
 
 model Restaurant {
   id        String     @id @default(uuid())
-  name      String
-  foodPacks FoodPack[] // One restaurant has many food packs
-  votes     Vote[] // Indirect relation to track votes for food packs within this restaurant
+  name      String?
+  foodPacks FoodPack[]
+  votes     Vote[]
+}
+
+model FoodPack {
+  id           String      @id @default(uuid())
+  name         String?
+  price        Float?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+  votes        Vote[]
 }
 
 model Vote {
   id           String      @id @default(uuid())
-  employeeId   String
-  foodPackId   String
-  employee     Employee    @relation(fields: [employeeId], references: [id])
-  foodPack     FoodPack    @relation(fields: [foodPackId], references: [id])
-  Restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  userId       String?
+  value        Int?
+  employeeId   String?
+  foodPackId   String?
+  foodPack     FoodPack?   @relation(fields: [foodPackId], references: [id])
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
   restaurantId String?
-}
-
-model FoodPack {
-  id           String     @id @default(uuid())
-  name         String
-  restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-  votes        Vote[]
+  Employee     Employee?   @relation(fields: [employeeId], references: [id])
 }
