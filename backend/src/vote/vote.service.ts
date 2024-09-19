@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
@@ -13,7 +13,7 @@ export class VoteService {
   private readonly logger = new Logger(VoteService.name);
 
   constructor(private prisma: PrismaService) {}
-  
+
   async getWinningFoodPack() {
     try {
       const today = new Date();
@@ -49,22 +49,35 @@ export class VoteService {
     }
   }
 
-
-
-
-
-
   async create(createVoteDto: CreateVoteDto) {
     const { userId, value, employeeId, foodPackId, restaurantId } = createVoteDto;
     this.logger.debug(`Creating vote with userId: ${userId}, value: ${value}, employeeId: ${employeeId}, foodPackId: ${foodPackId}, restaurantId: ${restaurantId}`);
 
     try {
+      // Check if the user has already voted today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+
+      const existingVote = await this.prisma.vote.findFirst({
+        where: {
+          userId,
+          createdAt: {
+            gte: today,
+          },
+        },
+      });
+
+      if (existingVote) {
+        throw new HttpException(`User with id ${userId} has already voted today`, HttpStatus.BAD_REQUEST);
+      }
+
       // Check if foodPackId exists
       const foodPack = await this.prisma.foodPack.findUnique({
         where: { id: foodPackId },
       });
       if (!foodPack) {
-        throw new Error(`FoodPack with id ${foodPackId} does not exist`);
+        throw new HttpException(`FoodPack with id ${foodPackId} does not exist`, HttpStatus.NOT_FOUND);
       }
 
       // Check if employeeId exists and validate userId
@@ -73,10 +86,10 @@ export class VoteService {
         select: { userId: true }, // Ensure userId is selected
       });
       if (!employee) {
-        throw new Error(`Employee with id ${employeeId} does not exist`);
+        throw new HttpException(`Employee with id ${employeeId} does not exist`, HttpStatus.NOT_FOUND);
       }
       if (employee.userId !== userId) {
-        throw new Error(`UserId ${userId} does not correspond to EmployeeId ${employeeId}`);
+        throw new HttpException(`UserId ${userId} does not correspond to EmployeeId ${employeeId}`, HttpStatus.BAD_REQUEST);
       }
 
       // Check if restaurantId exists
@@ -84,7 +97,7 @@ export class VoteService {
         where: { id: restaurantId },
       });
       if (!restaurant) {
-        throw new Error(`Restaurant with id ${restaurantId} does not exist`);
+        throw new HttpException(`Restaurant with id ${restaurantId} does not exist`, HttpStatus.NOT_FOUND);
       }
 
       const vote = await this.prisma.vote.create({
@@ -104,11 +117,6 @@ export class VoteService {
       throw error;
     }
   }
-
-
-
-
-
 
 
   async findAll() {

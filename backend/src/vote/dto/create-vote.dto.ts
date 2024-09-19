@@ -15,4 +15,8 @@ export class CreateVoteDto {
 
   @IsString()
   restaurantId: string;
+
+  // @IsString()
+  // createdAt: any;
+
 }
