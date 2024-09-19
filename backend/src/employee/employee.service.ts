@@ -9,10 +9,11 @@ export class EmployeeService {
   constructor(private prisma: PrismaService) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const { employeeId } = createEmployeeDto;
+    const { userId, employeeId } = createEmployeeDto;
     try {
       const newEmployee = await this.prisma.employee.create({
         data: {
+          userId,
           employeeId,
         },
       });
