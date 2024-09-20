@@ -3,17 +3,17 @@ import { Server } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:3001', // Replace with your frontend URL
+    origin: 'http://localhost:3000', // Replace with your frontend URL
     methods: ['GET', 'POST'],
     credentials: true,
   },
 })
-export class EmployeeGateway {
+export class VoteGateway {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('newEmployee')
-  handleNewEmployee(@MessageBody() data: any): void {
-    this.server.emit('newEmployee', data);
+  @SubscribeMessage('newVote')
+  handleNewVote(@MessageBody() data: any): void {
+    this.server.emit('newVote', data);
   }
 }

@@ -11,6 +11,7 @@ function NavBar() {
                 <li><Link href="/employee/get">Get all Employee</Link></li>
                 <li><Link href="/restaurant/get">Get all restaurant</Link></li>
                 <li><Link href="/restaurant/add">Add Restaurant</Link></li>
+                <li><Link href="/vote">Vote</Link></li>
                 
             </ul>
         </nav>

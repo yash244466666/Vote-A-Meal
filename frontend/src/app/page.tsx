@@ -1,18 +1,12 @@
-import Link from "next/link";
+import Winner from '../components/Winner';
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="">
-
-      <Link href="/employee/get">
-        All Employee List
-      </Link>
-      <br />
-      <Link href="/employee/add">
-        Create Employee
-      </Link>
-
-
+    <div>
+      <h1>Welcome to Vote-A-Meal</h1>
+      <Winner />
     </div>
   );
-}
+};
+
+export default Home;
