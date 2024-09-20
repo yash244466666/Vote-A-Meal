@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
 interface Employee {
   userId: string;
@@ -21,9 +22,17 @@ const EmployeeList = ({ initialData }: { initialData: Employee[] }) => {
       }
     };
 
-    const intervalId = setInterval(fetchEmployees, 1500); // Fetch every 5 seconds
+    fetchEmployees();
 
-    return () => clearInterval(intervalId);
+    const socket = io('http://localhost:3000');
+
+    socket.on('newEmployee', (newEmployee: Employee) => {
+      setEmployees((prevEmployees) => [...prevEmployees, newEmployee]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (

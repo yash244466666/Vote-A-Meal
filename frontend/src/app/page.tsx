@@ -4,11 +4,11 @@ export default function Home() {
   return (
     <div className="">
 
-      <Link href="/get-all-employee">
+      <Link href="/employee/get">
         All Employee List
       </Link>
       <br />
-      <Link href="/add-new-employee">
+      <Link href="/employee/add">
         Create Employee
       </Link>
 

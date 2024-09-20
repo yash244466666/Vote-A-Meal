@@ -3,10 +3,14 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { EmployeeGateway } from './employee.gateway';
 
 @Injectable()
 export class EmployeeService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private employeeGateway: EmployeeGateway 
+  ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto) {
     const { userId, employeeId } = createEmployeeDto;
@@ -17,6 +21,9 @@ export class EmployeeService {
           employeeId,
         },
       });
+      // Emit the new employee event
+      this.employeeGateway.server.emit('newEmployee', newEmployee);
+      
       return newEmployee;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {

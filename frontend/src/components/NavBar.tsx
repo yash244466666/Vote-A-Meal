@@ -7,8 +7,11 @@ function NavBar() {
         <nav>
             <ul>
                 <li><Link href="/">Home</Link></li>
-                <li><Link href="/add-new-employee">Add new Employee</Link></li>
-                <li><Link href="/get-all-employee">Get all Employee</Link></li>
+                <li><Link href="/employee/add">Add new Employee</Link></li>
+                <li><Link href="/employee/get">Get all Employee</Link></li>
+                <li><Link href="/restaurant/get">Get all restaurant</Link></li>
+                <li><Link href="/restaurant/add">Add Restaurant</Link></li>
+                
             </ul>
         </nav>
     </div>
