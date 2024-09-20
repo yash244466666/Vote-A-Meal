@@ -37,10 +37,10 @@ const RestaurantList = ({ initialData }: { initialData: Restaurant[] }) => {
   }, []);
 
   return (
-    <ul>
+    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {restaurants.map((restaurant) => (
-        <li key={restaurant.id}>
-          <p><b>Name:</b> {restaurant.name}</p>
+        <li key={restaurant.id} className="border p-4 rounded shadow">
+          <p className="font-bold"><b>Name:</b> {restaurant.name}</p>
           <p><b>Food Packs:</b> {restaurant.foodPacks.map(pack => `${pack.name} ($${pack.price})`).join(', ')}</p>
         </li>
       ))}

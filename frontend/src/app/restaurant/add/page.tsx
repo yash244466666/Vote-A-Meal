@@ -7,16 +7,16 @@ export default async function RestaurantPage() {
     const data = response.data;
 
     return (
-      <div>
-        <h1>Restaurant Data</h1>
-        <AddRestaurantForm  />
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <h1 className="text-3xl font-bold text-blue-600 mb-4">Restaurant Data</h1>
+        <AddRestaurantForm />
       </div>
     );
   } catch (error) {
     console.error('Error fetching data:', error);
     return (
-      <div>
-        <p>Error fetching data</p>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-red-600">Error fetching data</p>
       </div>
     );
   }

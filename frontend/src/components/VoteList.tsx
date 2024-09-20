@@ -1,6 +1,7 @@
 'use client'; // Mark only the client-side part
 
 import axios from 'axios';
+import { noSSR } from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
@@ -106,42 +107,69 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
   };
 
   return (
-    <div>
-      <h1>Vote for Food Packs</h1>
-      <div>
-        <label>User ID:</label>
-        <select value={userId} onChange={handleUserIdChange} required>
-          <option value="">Select User</option>
-          {employees.map(employee => (
-            <option key={employee.id} value={employee.userId}>
-              {employee.userId}
-            </option>
-          ))}
-        </select>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Vote for Food Packs</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">User ID:</label>
+          <select
+            value={userId}
+            onChange={handleUserIdChange}
+            required
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option value="">Select User</option>
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.userId}>
+                {employee.userId}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={{display:"none"}}>
+          <label className="block text-sm font-medium text-gray-700">Employee ID:</label>
+          <input
+            type="text"
+            value={employeeId}
+            readOnly
+            required
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          />
+        </div>
+        <div style={{display:"none"}}>
+          <label className="block text-sm font-medium text-gray-700">Vote Value:</label>
+          <input
+            type="number"
+            value={value}
+            onChange={(e) => setValue(parseInt(e.target.value))}
+            required
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          />
+        </div>
       </div>
-      <div>
-        <label>Employee ID:</label>
-        <input type="text" value={employeeId} readOnly required />
-      </div>
-      <div>
-        <label>Vote Value:</label>
-        <input type="number" value={value} onChange={(e) => setValue(parseInt(e.target.value))} required />
-      </div>
-      <ul>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {restaurants.map((restaurant) => (
-          <li key={restaurant.id}>
-            <h2>{restaurant.name}</h2>
-            <ul>
+          <li key={restaurant.id} className="border p-4 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold mb-2">{restaurant.name}</h2>
+            <ul className="grid grid-cols-1 gap-2">
               {restaurant.foodPacks.map((foodPack) => (
-                <li key={foodPack.id}>
-                  <p><b>Food Pack:</b> {foodPack.name} (${foodPack.price})</p>
-                  <button onClick={() => handleVote(foodPack.id, restaurant.id)}>Vote</button>
+                <li key={foodPack.id} className="flex justify-between items-center">
+                  <p>
+                    <b>Food Pack:</b> {foodPack.name} (${foodPack.price})
+                  </p>
+                  <button
+                    onClick={() => handleVote(foodPack.id, restaurant.id)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                  >
+                    Vote
+                  </button>
                 </li>
               ))}
             </ul>
           </li>
         ))}
       </ul>
+
     </div>
   );
 };

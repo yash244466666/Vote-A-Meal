@@ -41,16 +41,16 @@ const Winner = () => {
   if (!winner) {
     return <div>Loading...</div>;
   }
+return (
+  <div className="flex flex-col items-center p-4 bg-gray-100 rounded-lg shadow-md">
+    <h1 className="text-2xl font-bold mb-4">Today's Winning Food Pack</h1>
+    <p className="mb-2"><b>Name:</b> {winner.name}</p>
+    <p className="mb-2"><b>Price:</b> ${winner.price}</p>
+    <p className="mb-2"><b>Restaurant:</b> {winner.restaurant.name}</p>
+    <p className="mb-2"><b>Vote Count:</b> {winner.voteCount}</p>
+  </div>
+);
 
-  return (
-    <div>
-      <h1>Today's Winning Food Pack</h1>
-      <p><b>Name:</b> {winner.name}</p>
-      <p><b>Price:</b> ${winner.price}</p>
-      <p><b>Restaurant:</b> {winner.restaurant.name}</p>
-      <p><b>Vote Count:</b> {winner.voteCount}</p>
-    </div>
-  );
 };
 
 export default Winner;

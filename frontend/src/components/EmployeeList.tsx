@@ -36,11 +36,11 @@ const EmployeeList = ({ initialData }: { initialData: Employee[] }) => {
   }, []);
 
   return (
-    <ul>
+    <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {employees.map((employee) => (
-        <li key={employee.userId}>
-          <p><b>User ID:</b> {employee.userId}</p>
-          <p><b>Employee ID:</b> {employee.employeeId}</p>
+        <li key={employee.userId} className="bg-gray-100 p-4 rounded shadow">
+          <p className="font-bold"><b>User ID:</b> {employee.userId}</p>
+          <p className="font-bold"><b>Employee ID:</b> {employee.employeeId}</p>
         </li>
       ))}
     </ul>
