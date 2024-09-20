@@ -1,9 +1,18 @@
-import React from 'react'
+import Link from "next/link";
 
-function page() {
+export default function Home() {
   return (
-    <div>page</div>
-  )
-}
+    <div className="">
 
-export default page
+      <Link href="/get-all-employee">
+        All Employee List
+      </Link>
+      <br />
+      <Link href="/add-new-employee">
+        Create Employee
+      </Link>
+
+
+    </div>
+  );
+}
