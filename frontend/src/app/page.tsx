@@ -1,9 +1,12 @@
-import React from 'react'
+import Winner from '../components/Winner';
 
-function page() {
+const Home = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <h1>Welcome to Vote-A-Meal</h1>
+      <Winner />
+    </div>
+  );
+};
 
-export default page
+export default Home;

@@ -2,12 +2,16 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { RestaurantGateway } from './restaurant.gateway';
 
 @Injectable()
 export class RestaurantService {
   private readonly logger = new Logger(RestaurantService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private restaurantGateway: RestaurantGateway
+  ) {}
 
   async create(createRestaurantDto: CreateRestaurantDto) {
     const { name, foodPacks } = createRestaurantDto;
@@ -31,6 +35,9 @@ export class RestaurantService {
         },
       });
 
+      // Emit the new restaurant event
+      this.restaurantGateway.server.emit('newRestaurant', restaurant);
+      
       this.logger.debug(`Restaurant created successfully: ${JSON.stringify(restaurant)}`);
       return restaurant;
     } catch (error) {

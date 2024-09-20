@@ -2,6 +2,7 @@ import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
+import { VoteGateway } from './vote.gateway';
 
 interface VoteCountResult {
   foodPackId: string;
@@ -12,7 +13,11 @@ interface VoteCountResult {
 export class VoteService {
   private readonly logger = new Logger(VoteService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private voteGateway: VoteGateway
+  
+  ) {}
 
   async getWinningFoodPack() {
     try {
@@ -48,6 +53,8 @@ export class VoteService {
       throw error;
     }
   }
+
+
 
   async create(createVoteDto: CreateVoteDto) {
     const { userId, value, employeeId, foodPackId, restaurantId } = createVoteDto;
@@ -110,6 +117,9 @@ export class VoteService {
         },
       });
 
+      // Emit the new vote event
+      this.voteGateway.server.emit('newVote', vote);
+
       this.logger.debug(`Vote created successfully: ${JSON.stringify(vote)}`);
       return vote;
     } catch (error) {
@@ -117,6 +127,9 @@ export class VoteService {
       throw error;
     }
   }
+
+
+
 
 
   async findAll() {
