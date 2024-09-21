@@ -71,10 +71,10 @@ const EmployeeList: React.FC = () => {
   };
 
 return (
-  <div className="container mx-auto p-4">
+  <div className="container mx-auto p-4 sm:p-6 lg:p-8">
     {isEditing && currentEmployee ? (
-      <div className="mb-4 p-4 border rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-2">Edit Employee</h2>
+      <div className="mb-4 p-4 sm:p-6 lg:p-8 border rounded-lg shadow-md">
+        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">Edit Employee</h2>
         <div className="mb-2">
           <label className="block text-gray-700">User ID:</label>
           <input
@@ -82,7 +82,7 @@ return (
             name="userId"
             value={currentEmployee.userId}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full sm:w-3/4 lg:w-1/2 p-2 border rounded"
           />
         </div>
         <div className="mb-2">
@@ -92,7 +92,7 @@ return (
             name="employeeId"
             value={currentEmployee.employeeId}
             onChange={handleChange}
-            className="w-full p-2 border rounded"
+            className="w-full sm:w-3/4 lg:w-1/2 p-2 border rounded"
           />
         </div>
         <button
@@ -105,24 +105,25 @@ return (
     ) : (
       <ul className="space-y-4">
         {employees.map(employee => (
-          <li key={employee.id} className="border p-4 rounded-lg shadow-md">
-            <div className="flex justify-between items-center mb-2">
-              <div className="text-lg">
+          <li key={employee.id} className="border p-4 sm:p-6 lg:p-8 rounded-lg shadow-md">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+              <div className="text-lg sm:text-xl lg:text-2xl">
                 <span className="font-semibold">User Name:</span> {employee.userId} <br />
                 <span className="font-semibold">Employee ID:</span> {employee.employeeId}
               </div>
-              <div className="space-x-2">
+              <div className="space-x-2 mt-2 sm:mt-0">
+              <button
+                  onClick={() => handleDelete(employee.id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                >
+                  Delete
+                </button>
+
                 <button
                   onClick={() => handleEdit(employee)}
                   className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
                 >
                   Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(employee.id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
                 </button>
               </div>
             </div>

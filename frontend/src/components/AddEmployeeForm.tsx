@@ -8,6 +8,7 @@ const EmployeeForm = () => {
   const [formData, setFormData] = useState({ userId: '', employeeId: '' });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -17,25 +18,30 @@ const EmployeeForm = () => {
       console.log('Response received:', response);
       if (response.status >= 200 && response.status < 300) {
         console.log('Data posted successfully:', response.data);
-        setErrorMessage(''); // Clear any previous error messages
-        setSuccessMessage('Data posted successfully!'); // Set success message
-        setFormData({ userId: '', employeeId: '' }); // Reset form data
+        setErrorMessage(''); 
+        setSuccessMessage('Data posted successfully!'); 
+        setFormData({ userId: '', employeeId: '' }); 
+        // Automatically hide success message after 3 seconds
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000);
       } else {
         console.log('Non-2xx response:', response);
         setErrorMessage('Failed to post data.');
-        setSuccessMessage(''); // Clear any previous success messages
+        setSuccessMessage(''); 
+        setFormData({ userId: '', employeeId: '' });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Handle Axios error
+
         console.error('Axios error posting data:', error);
         setErrorMessage(`Failed to post data: ${error.response?.data?.message || error.message}`);
       } else {
-        // Handle non-Axios error
+
         console.error('Unexpected error:', error);
         setErrorMessage('An unexpected error occurred.');
       }
-      setSuccessMessage(''); // Clear any previous success messages
+      setSuccessMessage(''); 
     }
   };
 

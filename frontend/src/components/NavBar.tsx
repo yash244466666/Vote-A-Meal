@@ -34,12 +34,12 @@ function NavBar() {
         </div>
         <ul className={`flex flex-col md:flex-row md:space-x-4 ${isOpen ? 'block' : 'hidden'} md:flex md:items-center md:justify-center w-full md:w-auto`}>
           <li><Link href="/" className={linkClasses('/')} onClick={closeMenu}>Home</Link></li>
-          <li><Link href="/employee/add" className={linkClasses('/employee/add')} onClick={closeMenu}>Add new Employee</Link></li>
-          <li><Link href="/employee/get" className={linkClasses('/employee/get')} onClick={closeMenu}>Get all Employee</Link></li>
-          <li><Link href="/restaurant/get" className={linkClasses('/restaurant/get')} onClick={closeMenu}>Get all restaurant</Link></li>
-          <li><Link href="/restaurant/add" className={linkClasses('/restaurant/add')} onClick={closeMenu}>Add Restaurant</Link></li>
+          <li><Link href="/employee/add" className={linkClasses('/employee/add')} onClick={closeMenu}>Add New Employee</Link></li>
+          <li><Link href="/restaurant/add" className={linkClasses('/restaurant/add')} onClick={closeMenu}>Add New Restaurant</Link></li>
+          <li><Link href="/employee/get" className={linkClasses('/employee/get')} onClick={closeMenu}>Employee List</Link></li>
+          <li><Link href="/restaurant/get" className={linkClasses('/restaurant/get')} onClick={closeMenu}>Restaurant List</Link></li>
+          <li><Link href="/vote/get_all" className={linkClasses('/vote/get_all')} onClick={closeMenu}>Vote List</Link></li>
           <li><Link href="/vote" className={linkClasses('/vote')} onClick={closeMenu}>Vote</Link></li>
-          <li><Link href="/vote/get_all" className={linkClasses('/vote/get_all')} onClick={closeMenu}>Get All Vote</Link></li>
         </ul>
       </nav>
     </div>

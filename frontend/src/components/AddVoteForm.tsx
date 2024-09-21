@@ -38,6 +38,8 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
   const [userId, setUserId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [value, setValue] = useState(5); // Default vote value
+  const [message, setMessage] = useState<string | null>(null); // State for message
+  const [messageType, setMessageType] = useState<'success' | 'error' | null>(null); // State for message type
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -85,14 +87,16 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
 
     try {
       await axios.post('http://localhost:3000/vote', voteData);
-      alert('Vote submitted successfully');
+      setMessage('Vote submitted successfully');
+      setMessageType('success');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
-        alert(`Error submitting vote: ${error.response.data.message}`);
+        setMessage(`Error submitting vote: ${error.response.data.message}`);
       } else {
         console.error('Error submitting vote:', error);
-        alert('Error submitting vote');
+        setMessage('Error submitting vote');
       }
+      setMessageType('error');
     }
   };
 
@@ -108,7 +112,15 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Vote for Food Packs</h1>
+      {message && (
+        <div
+          className={`mb-4 p-2 rounded ${
+            messageType === 'success' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'
+          }`}
+        >
+          {message}
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">User ID:</label>
@@ -147,7 +159,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
           />
         </div>
       </div>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {restaurants.map((restaurant) => (
           <li key={restaurant.id} className="border p-4 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold mb-2">{restaurant.name}</h2>
@@ -169,7 +181,6 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
           </li>
         ))}
       </ul>
-
     </div>
   );
 };

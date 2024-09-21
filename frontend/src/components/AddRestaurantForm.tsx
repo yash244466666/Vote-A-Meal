@@ -1,34 +1,47 @@
 'use client'; // Mark only the client-side part
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 const AddRestaurantForm = () => {
-  const [name, setName] = useState('');
-  const [foodPacks, setFoodPacks] = useState([{ name: '', price: 0 }]);
+  const [name, setName] = useState ('');
+  const [foodPacks, setFoodPacks] = useState ([{name: '', price: 0}]);
+  const [successMessage, setSuccessMessage] = useState ('');
+  const [errorMessage, setErrorMessage] = useState ('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState (false);
 
-  const handleFoodPackChange = (index: number, field: string, value: string | number) => {
+  const handleFoodPackChange = (
+    index: number,
+    field: string,
+    value: string | number
+  ) => {
     const newFoodPacks = [...foodPacks];
-    newFoodPacks[index] = { ...newFoodPacks[index], [field]: value };
-    setFoodPacks(newFoodPacks);
+    newFoodPacks[index] = {...newFoodPacks[index], [field]: value};
+    setFoodPacks (newFoodPacks);
   };
 
   const addFoodPack = () => {
-    setFoodPacks([...foodPacks, { name: '', price: 0 }]);
+    setFoodPacks ([...foodPacks, {name: '', price: 0}]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault ();
     try {
-      await axios.post('http://localhost:3000/restaurant', { name, foodPacks });
-      alert('Restaurant added successfully');
+      await axios.post ('http://localhost:3000/restaurant', {name, foodPacks});
+      setName ('');
+      setFoodPacks ([{name: '', price: 0}]);
+      setSuccessMessage ('Restaurant added successfully');
+      setErrorMessage ('');
+      setShowSuccessMessage (true);
+      setTimeout (() => {
+        setShowSuccessMessage (false);
+      }, 3000); // Hide success message after 3 seconds
     } catch (error) {
-      console.error('Error adding restaurant:', error);
-      alert('Error adding restaurant');
+      console.error ('Error adding restaurant:', error);
+      setErrorMessage ('Error adding restaurant');
     }
   };
 
-  
   return (
     <div className="max-w-xl mx-auto p-4 bg-white shadow-md rounded-lg">
       <h1 className="text-2xl font-bold mb-4">Add New Restaurant</h1>
@@ -38,20 +51,21 @@ const AddRestaurantForm = () => {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName (e.target.value)}
             required
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Food Packs</h2>
-          {foodPacks.map((foodPack, index) => (
+          {foodPacks.map ((foodPack, index) => (
             <div key={index} className="mb-2">
               <label className="block text-gray-700">Food Pack Name:</label>
               <input
                 type="text"
                 value={foodPack.name}
-                onChange={(e) => handleFoodPackChange(index, 'name', e.target.value)}
+                onChange={e =>
+                  handleFoodPackChange (index, 'name', e.target.value)}
                 required
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
               />
@@ -59,7 +73,12 @@ const AddRestaurantForm = () => {
               <input
                 type="number"
                 value={foodPack.price}
-                onChange={(e) => handleFoodPackChange(index, 'price', parseFloat(e.target.value))}
+                onChange={e =>
+                  handleFoodPackChange (
+                    index,
+                    'price',
+                    parseFloat (e.target.value)
+                  )}
                 required
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -79,11 +98,13 @@ const AddRestaurantForm = () => {
         >
           Add Restaurant
         </button>
+        {showSuccessMessage &&
+          <div className="text-green-500 mb-4">{successMessage}</div>}
+        {errorMessage &&
+          <div className="text-red-500 mb-4">{errorMessage}</div>}
       </form>
     </div>
   );
-
-
 };
 
 export default AddRestaurantForm;
