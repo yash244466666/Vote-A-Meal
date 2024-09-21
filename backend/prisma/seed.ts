@@ -1,17 +1,28 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const prisma = new PrismaClient();
 
 async function main() {
   // Create Admin User
-  const hashedPassword = bcrypt.hashSync('1234', 10);
-    const admin = await prisma.admin.create({
-      data: {
-        username: 'admin',
-        password: hashedPassword,
-      },
-    });
+  const adminUsername = process.env.ADMIN_USERNAME;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminUsername || !adminPassword) {
+    throw new Error('Admin credentials are not set in the environment variables');
+  }
+
+  const hashedPassword = bcrypt.hashSync(adminPassword, 10);
+  const admin = await prisma.admin.create({
+    data: {
+      username: adminUsername,
+      password: hashedPassword,
+    },
+  });
+  
   // Create Restaurants
   const restaurant1 = await prisma.restaurant.create({
     data: {
