@@ -11,7 +11,7 @@ export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post()
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create an employee' })
   @ApiResponse({ status: 201, description: 'The employee has been successfully created.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -35,7 +35,7 @@ export class EmployeeController {
   }
 
   @Patch(':id')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update an employee by ID' })
   @ApiResponse({ status: 200, description: 'The employee has been successfully updated.' })
   @ApiResponse({ status: 404, description: 'Employee not found.' })
@@ -44,7 +44,7 @@ export class EmployeeController {
   }
 
   @Delete(':id')
-  // @UseGuards(JwtAuthGuard) 
+  @UseGuards(JwtAuthGuard) 
   @ApiOperation({ summary: 'Delete an employee by ID' })
   @ApiResponse({ status: 200, description: 'The employee has been successfully deleted.' })
   @ApiResponse({ status: 404, description: 'Employee not found.' })

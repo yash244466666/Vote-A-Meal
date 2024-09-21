@@ -1,26 +1,41 @@
+// src/app/employee/add/page.tsx
 'use client'; // Mark only the client-side part
-
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext'; // Import the useAuth hook
+import withAuth from '@/hoc/withAuth'; // Import the withAuth HOC
 
-const EmployeeForm = () => {
+const AddEmployee = () => {
   const [formData, setFormData] = useState({ userId: '', employeeId: '' });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  
+  const { isLoggedIn } = useAuth(); // Get the login state
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!isLoggedIn) {
+      setErrorMessage('You must be logged in to add an employee.');
+      return;
+    }
     try {
       console.log('Submitting data:', formData);
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/employee`, formData);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setErrorMessage('No token found. Please log in again.');
+        return;
+      }
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/employee`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the JWT token in the request headers
+        },
+      });
       console.log('Response received:', response);
       if (response.status >= 200 && response.status < 300) {
         console.log('Data posted successfully:', response.data);
-        setErrorMessage(''); 
-        setSuccessMessage('Data posted successfully!'); 
-        setFormData({ userId: '', employeeId: '' }); 
+        setErrorMessage('');
+        setSuccessMessage('Data posted successfully!');
+        setFormData({ userId: '', employeeId: '' });
         // Automatically hide success message after 3 seconds
         setTimeout(() => {
           setSuccessMessage('');
@@ -28,20 +43,18 @@ const EmployeeForm = () => {
       } else {
         console.log('Non-2xx response:', response);
         setErrorMessage('Failed to post data.');
-        setSuccessMessage(''); 
+        setSuccessMessage('');
         setFormData({ userId: '', employeeId: '' });
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-
         console.error('Axios error posting data:', error);
         setErrorMessage(`Failed to post data: ${error.response?.data?.message || error.message}`);
       } else {
-
         console.error('Unexpected error:', error);
         setErrorMessage('An unexpected error occurred.');
       }
-      setSuccessMessage(''); 
+      setSuccessMessage('');
     }
   };
 
@@ -49,6 +62,7 @@ const EmployeeForm = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-gray-100 rounded-md shadow-md">
       <h1 className="text-2xl font-bold mb-4">Add New Employee</h1>
@@ -77,4 +91,4 @@ const EmployeeForm = () => {
   );
 };
 
-export default EmployeeForm;
+export default withAuth(AddEmployee);

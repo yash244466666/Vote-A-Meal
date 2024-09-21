@@ -1,14 +1,17 @@
 'use client'; // Mark only the client-side part
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '@/context/AuthContext'; // Import the useAuth hook
+import withAuth from '@/hoc/withAuth'; // Import the withAuth HOC
 
 const AddRestaurantForm = () => {
-  const [name, setName] = useState ('');
-  const [foodPacks, setFoodPacks] = useState ([{name: '', price: 0}]);
-  const [successMessage, setSuccessMessage] = useState ('');
-  const [errorMessage, setErrorMessage] = useState ('');
-  const [showSuccessMessage, setShowSuccessMessage] = useState (false);
+  const [name, setName] = useState('');
+  const [foodPacks, setFoodPacks] = useState([{ name: '', price: 0 }]);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { isLoggedIn } = useAuth(); // Get the login state
 
   const handleFoodPackChange = (
     index: number,
@@ -16,29 +19,46 @@ const AddRestaurantForm = () => {
     value: string | number
   ) => {
     const newFoodPacks = [...foodPacks];
-    newFoodPacks[index] = {...newFoodPacks[index], [field]: value};
-    setFoodPacks (newFoodPacks);
+    newFoodPacks[index] = { ...newFoodPacks[index], [field]: value };
+    setFoodPacks(newFoodPacks);
   };
 
   const addFoodPack = () => {
-    setFoodPacks ([...foodPacks, {name: '', price: 0}]);
+    setFoodPacks([...foodPacks, { name: '', price: 0 }]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault ();
+    e.preventDefault();
+    if (!isLoggedIn) {
+      setErrorMessage('You must be logged in to add a restaurant.');
+      return;
+    }
     try {
-      await axios.post (`${process.env.NEXT_PUBLIC_API_URL}/restaurant`, {name, foodPacks});
-      setName ('');
-      setFoodPacks ([{name: '', price: 0}]);
-      setSuccessMessage ('Restaurant added successfully');
-      setErrorMessage ('');
-      setShowSuccessMessage (true);
-      setTimeout (() => {
-        setShowSuccessMessage (false);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setErrorMessage('No token found. Please log in again.');
+        return;
+      }
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/restaurant`, { name, foodPacks }, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the JWT token in the request headers
+        },
+      });
+      setName('');
+      setFoodPacks([{ name: '', price: 0 }]);
+      setSuccessMessage('Restaurant added successfully');
+      setErrorMessage('');
+      setShowSuccessMessage(true);
+      setTimeout(() => {
+        setShowSuccessMessage(false);
       }, 3000); // Hide success message after 3 seconds
     } catch (error) {
-      console.error ('Error adding restaurant:', error);
-      setErrorMessage ('Error adding restaurant');
+      console.error('Error adding restaurant:', error);
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(`Error adding restaurant: ${error.response?.data?.message || error.message}`);
+      } else {
+        setErrorMessage('An unexpected error occurred.');
+      }
     }
   };
 
@@ -51,21 +71,21 @@ const AddRestaurantForm = () => {
           <input
             type="text"
             value={name}
-            onChange={e => setName (e.target.value)}
+            onChange={e => setName(e.target.value)}
             required
             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-semibold mb-2">Food Packs</h2>
-          {foodPacks.map ((foodPack, index) => (
+          {foodPacks.map((foodPack, index) => (
             <div key={index} className="mb-2">
               <label className="block text-gray-700">Food Pack Name:</label>
               <input
                 type="text"
                 value={foodPack.name}
                 onChange={e =>
-                  handleFoodPackChange (index, 'name', e.target.value)}
+                  handleFoodPackChange(index, 'name', e.target.value)}
                 required
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
               />
@@ -74,11 +94,7 @@ const AddRestaurantForm = () => {
                 type="number"
                 value={foodPack.price}
                 onChange={e =>
-                  handleFoodPackChange (
-                    index,
-                    'price',
-                    parseFloat (e.target.value)
-                  )}
+                  handleFoodPackChange(index, 'price', parseFloat(e.target.value))}
                 required
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -107,4 +123,4 @@ const AddRestaurantForm = () => {
   );
 };
 
-export default AddRestaurantForm;
+export default withAuth(AddRestaurantForm);
