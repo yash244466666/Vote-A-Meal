@@ -23,7 +23,7 @@ export class VoteService {
     try {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
+  
       const result = await this.prisma.$queryRaw<VoteCountResult[]>`
         SELECT "foodPackId", COUNT(*) as "voteCount"
         FROM "Vote"
@@ -32,11 +32,11 @@ export class VoteService {
         ORDER BY "voteCount" DESC
         LIMIT 1
       `;
-
+  
       if (result.length === 0) {
-        throw new Error('No votes found for today');
+        throw new HttpException('No votes found for today', HttpStatus.NOT_FOUND);
       }
-
+  
       const winningFoodPackId = result[0].foodPackId;
       const voteCount = Number(result[0].voteCount);
       const winningFoodPack = await this.prisma.foodPack.findUnique({
@@ -45,12 +45,21 @@ export class VoteService {
           restaurant: true,
         },
       });
-
+  
+      if (!winningFoodPack) {
+        throw new HttpException(`FoodPack with id ${winningFoodPackId} not found`, HttpStatus.NOT_FOUND);
+      }
+  
       this.logger.debug(`Winning food pack: ${JSON.stringify(winningFoodPack)}`);
       return { ...winningFoodPack, voteCount };
     } catch (error) {
-      this.logger.error(`Error finding winning food pack: ${error.message}`, error.stack);
-      throw error;
+      if (error instanceof HttpException) {
+        this.logger.error(`Error finding winning food pack: ${error.message}`, error.stack);
+        throw error;
+      } else {
+        this.logger.error(`Unexpected error: ${error.message}`, error.stack);
+        throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
     }
   }
 

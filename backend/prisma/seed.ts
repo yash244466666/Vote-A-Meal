@@ -1,8 +1,17 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
 async function main() {
+  // Create Admin User
+  const hashedPassword = bcrypt.hashSync('1234', 10);
+    const admin = await prisma.admin.create({
+      data: {
+        username: 'admin',
+        password: hashedPassword,
+      },
+    });
   // Create Restaurants
   const restaurant1 = await prisma.restaurant.create({
     data: {

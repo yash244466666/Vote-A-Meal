@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,UseGuards } from '@nestjs/common';
 import { VoteService } from './vote.service';
 import { CreateVoteDto } from './dto/create-vote.dto';
 import { UpdateVoteDto } from './dto/update-vote.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('votes')
 @Controller('vote')
@@ -26,6 +27,7 @@ export class VoteController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all votes' })
   @ApiResponse({ status: 200, description: 'All votes have been successfully retrieved.' })
   findAll() {
@@ -33,6 +35,7 @@ export class VoteController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get a vote by ID' })
   @ApiResponse({ status: 200, description: 'The vote has been successfully retrieved.' })
   @ApiResponse({ status: 404, description: 'Vote not found.' })
@@ -41,6 +44,7 @@ export class VoteController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update a vote by ID' })
   @ApiResponse({ status: 200, description: 'The vote has been successfully updated.' })
   @ApiResponse({ status: 404, description: 'Vote not found.' })
@@ -49,6 +53,7 @@ export class VoteController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete a vote by ID' })
   @ApiResponse({ status: 200, description: 'The vote has been successfully deleted.' })
   @ApiResponse({ status: 404, description: 'Vote not found.' })

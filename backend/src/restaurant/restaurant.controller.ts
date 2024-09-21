@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto';
 import { UpdateRestaurantDto } from './dto/update-restaurant.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('restaurants')
 @Controller('restaurant')
@@ -10,6 +11,7 @@ export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a restaurant' })
   @ApiResponse({ status: 201, description: 'The restaurant has been successfully created.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -33,6 +35,7 @@ export class RestaurantController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Update a restaurant by ID' })
   @ApiResponse({ status: 200, description: 'The restaurant has been successfully updated.' })
   @ApiResponse({ status: 404, description: 'Restaurant not found.' })
@@ -41,6 +44,7 @@ export class RestaurantController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Delete a restaurant by ID' })
   @ApiResponse({ status: 200, description: 'The restaurant has been successfully deleted.' })
   @ApiResponse({ status: 404, description: 'Restaurant not found.' })

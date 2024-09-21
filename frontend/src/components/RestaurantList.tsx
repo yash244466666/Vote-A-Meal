@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import withAuth from '@/hoc/withAuth'; // Import the withAuth HOC
 
 interface FoodPack {
   id: number;
@@ -34,8 +35,17 @@ const RestaurantList: React.FC = () => {
   };
 
   const handleDelete = async (id: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found. Please log in again.');
+      return;
+    }
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${id}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the JWT token in the request headers
+        },
+      });
       setRestaurants(restaurants.filter(restaurant => restaurant.id !== id));
     } catch (error) {
       console.error('Error deleting restaurant:', error);
@@ -49,8 +59,17 @@ const RestaurantList: React.FC = () => {
 
   const handleSave = async () => {
     if (currentRestaurant) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('No token found. Please log in again.');
+        return;
+      }
       try {
-        await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${currentRestaurant.id}`, currentRestaurant);
+        await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${currentRestaurant.id}`, currentRestaurant, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the JWT token in the request headers
+          },
+        });
         setIsEditing(false);
         setCurrentRestaurant(null);
         fetchRestaurants();
@@ -148,4 +167,4 @@ const RestaurantList: React.FC = () => {
   );
 };
 
-export default RestaurantList;
+export default withAuth(RestaurantList);
