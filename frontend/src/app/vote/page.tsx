@@ -1,5 +1,5 @@
 import axios from 'axios';
-import VoteList from "@/components/VoteList";
+import VoteList from "@/components/AddVoteForm";
 
 const VotePage = async () => {
   const response = await axios.get('http://localhost:3000/restaurant');

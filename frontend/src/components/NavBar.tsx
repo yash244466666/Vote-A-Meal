@@ -21,6 +21,7 @@ function NavBar() {
           <li><Link href="/restaurant/get" className={linkClasses('/restaurant/get')}>Get all restaurant</Link></li>
           <li><Link href="/restaurant/add" className={linkClasses('/restaurant/add')}>Add Restaurant</Link></li>
           <li><Link href="/vote" className={linkClasses('/vote')}>Vote</Link></li>
+          <li><Link href="/vote/get_all" className={linkClasses('/vote/get_all')}>Get All Vote</Link></li>
         </ul>
       </nav>
     </div>

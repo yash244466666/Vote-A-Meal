@@ -1,4 +1,4 @@
-import EmployeeForm from '@/components/EmployeeForm'
+import EmployeeForm from '@/components/AddEmployeeForm'
 import React from 'react'
 
 export default function page() {
