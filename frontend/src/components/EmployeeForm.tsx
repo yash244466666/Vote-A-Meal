@@ -45,12 +45,13 @@ const EmployeeForm = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-gray-100 rounded-md shadow-md">
+      <h1 className="text-2xl font-bold mb-4">Add New Employee</h1>
       <input
         type="text"
         name="userId"
         value={formData.userId}
         onChange={handleChange}
-        placeholder="User ID"
+        placeholder="User Name"
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input

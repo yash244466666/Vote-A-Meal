@@ -72,7 +72,6 @@ const EmployeeList: React.FC = () => {
 
 return (
   <div className="container mx-auto p-4">
-    <h1 className="text-2xl font-bold mb-4">Employee List</h1>
     {isEditing && currentEmployee ? (
       <div className="mb-4 p-4 border rounded-lg shadow-md">
         <h2 className="text-xl font-bold mb-2">Edit Employee</h2>
@@ -109,7 +108,7 @@ return (
           <li key={employee.id} className="border p-4 rounded-lg shadow-md">
             <div className="flex justify-between items-center mb-2">
               <div className="text-lg">
-                <span className="font-semibold">User ID:</span> {employee.userId} <br />
+                <span className="font-semibold">User Name:</span> {employee.userId} <br />
                 <span className="font-semibold">Employee ID:</span> {employee.employeeId}
               </div>
               <div className="space-x-2">
