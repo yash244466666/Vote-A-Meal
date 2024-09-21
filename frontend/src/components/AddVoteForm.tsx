@@ -1,7 +1,6 @@
 'use client'; // Mark only the client-side part
 
 import axios from 'axios';
-import { noSSR } from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
@@ -44,7 +43,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/restaurant');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurant`);
         setRestaurants(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -53,7 +52,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
 
     const fetchEmployees = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/employee');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/employee`);
         setEmployees(response.data);
       } catch (error) {
         console.error('Error fetching employees:', error);
@@ -63,7 +62,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
     fetchRestaurants();
     fetchEmployees();
 
-    const socket = io('http://localhost:3000', {
+    const socket = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
       withCredentials: true,
     });
 
@@ -86,7 +85,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
     };
 
     try {
-      await axios.post('http://localhost:3000/vote', voteData);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/vote`, voteData);
       setMessage('Vote submitted successfully');
       setMessageType('success');
     } catch (error) {

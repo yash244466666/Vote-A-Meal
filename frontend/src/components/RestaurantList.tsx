@@ -26,7 +26,7 @@ const RestaurantList: React.FC = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/restaurant');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/restaurant`);
       setRestaurants(response.data);
     } catch (error) {
       console.error('Error fetching restaurants:', error);
@@ -35,7 +35,7 @@ const RestaurantList: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3000/restaurant/${id}`);
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${id}`);
       setRestaurants(restaurants.filter(restaurant => restaurant.id !== id));
     } catch (error) {
       console.error('Error deleting restaurant:', error);
@@ -50,7 +50,7 @@ const RestaurantList: React.FC = () => {
   const handleSave = async () => {
     if (currentRestaurant) {
       try {
-        await axios.patch(`http://localhost:3000/restaurant/${currentRestaurant.id}`, currentRestaurant);
+        await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/restaurant/${currentRestaurant.id}`, currentRestaurant);
         setIsEditing(false);
         setCurrentRestaurant(null);
         fetchRestaurants();

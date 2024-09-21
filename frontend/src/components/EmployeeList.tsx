@@ -18,7 +18,7 @@ const EmployeeList: React.FC = () => {
 
   useEffect(() => {
     // Fetch employee data
-    axios.get('http://localhost:3000/employee')
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL}/employee`)
       .then(response => {
         setEmployees(response.data);
       })
@@ -28,7 +28,7 @@ const EmployeeList: React.FC = () => {
   }, []);
 
   const handleDelete = (id: string) => {
-    axios.delete(`http://localhost:3000/employee/${id}`)
+    axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/employee/${id}`)
       .then(response => {
         // Remove the deleted employee from the state
         setEmployees(employees.filter(employee => employee.id !== id));
@@ -46,11 +46,11 @@ const EmployeeList: React.FC = () => {
   const handleSave = async () => {
     if (currentEmployee) {
       try {
-        await axios.patch(`http://localhost:3000/employee/${currentEmployee.id}`, currentEmployee);
+        await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/employee/${currentEmployee.id}`, currentEmployee);
         setIsEditing(false);
         setCurrentEmployee(null);
         // Fetch updated employees list or update state directly
-        axios.get('http://localhost:3000/employee')
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/employee`)
           .then(response => {
             setEmployees(response.data);
           })

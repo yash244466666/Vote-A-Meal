@@ -27,7 +27,7 @@ const AddRestaurantForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault ();
     try {
-      await axios.post ('http://localhost:3000/restaurant', {name, foodPacks});
+      await axios.post (`${process.env.NEXT_PUBLIC_API_URL}/restaurant`, {name, foodPacks});
       setName ('');
       setFoodPacks ([{name: '', price: 0}]);
       setSuccessMessage ('Restaurant added successfully');

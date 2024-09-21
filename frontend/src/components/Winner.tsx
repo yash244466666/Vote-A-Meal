@@ -23,7 +23,7 @@ const Winner = () => {
   useEffect(() => {
     const fetchWinner = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/vote/winner');
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/vote/winner`);
         setWinner(response.data);
       } catch (error) {
         setError('Error fetching winner');

@@ -14,7 +14,7 @@ const EmployeeForm = () => {
     event.preventDefault();
     try {
       console.log('Submitting data:', formData);
-      const response = await axios.post('http://localhost:3000/employee', formData);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/employee`, formData);
       console.log('Response received:', response);
       if (response.status >= 200 && response.status < 300) {
         console.log('Data posted successfully:', response.data);

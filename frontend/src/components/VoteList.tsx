@@ -18,7 +18,7 @@ function Votes() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/vote/')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/vote`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -38,7 +38,7 @@ function Votes() {
   }, []);
 
   const handleDelete = (id: string) => {
-    fetch(`http://localhost:3000/vote/${id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/vote/${id}`, {
       method: 'DELETE',
     })
       .then(response => {
