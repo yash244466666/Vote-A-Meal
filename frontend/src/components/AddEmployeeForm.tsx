@@ -43,15 +43,16 @@ const EmployeeForm = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-gray-100 rounded-md shadow-md">
+      <h1 className="text-2xl font-bold mb-4">Add New Employee</h1>
       <input
         type="text"
         name="userId"
         value={formData.userId}
         onChange={handleChange}
-        placeholder="User ID"
+        placeholder="User Name"
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <input
         type="text"
@@ -59,10 +60,13 @@ const EmployeeForm = () => {
         value={formData.employeeId}
         onChange={handleChange}
         placeholder="Employee ID"
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button type="submit">Submit</button>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+      <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+        Submit
+      </button>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+      {successMessage && <p className="text-green-500">{successMessage}</p>}
     </form>
   );
 };
