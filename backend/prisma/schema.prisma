@@ -13,12 +13,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Article {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
-  description String?
-  body        String
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Employee {
+  id         String @id @default(uuid())
+  userId     String?
+  employeeId String @unique
+  votes      Vote[]
+}
+
+model Restaurant {
+  id        String     @id @default(uuid())
+  name      String?
+  foodPacks FoodPack[]
+  votes     Vote[]
+}
+
+model FoodPack {
+  id           String      @id @default(uuid())
+  name         String?
+  price        Float?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+  votes        Vote[]
+}
+
+model Vote {
+  id           String      @id @default(uuid())
+  userId       String?
+  value        Int?
+  employeeId   String?
+  foodPackId   String?
+  foodPack     FoodPack?   @relation(fields: [foodPackId], references: [id])
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?
+  Employee     Employee?   @relation(fields: [employeeId], references: [id])
+  createdAt    DateTime    @default(now())
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  username  String?   @unique
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
