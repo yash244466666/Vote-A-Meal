@@ -92,7 +92,7 @@ npm run dev
 
 ```
 
-## 👥 Authors <a name="authors"></a>
+## 👥 Author <a name="author"></a>
 
 👨‍🚀 **Yash**
 
