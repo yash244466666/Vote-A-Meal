@@ -3,6 +3,8 @@ To check api documentation goto
 http://127.0.0.1:3000/api
 or
 http://localhost:3000/api
+or
+http://your-domain:your-port/api
 after starting the backend
 ## Setup your .env file
 ```bash
@@ -43,6 +45,8 @@ To check swagger documentation goto:
 http://127.0.0.1:3000/api
 or
 http://localhost:3000/api
+or
+http://your-domain:your-port/api
 ```
 
 ## Start Backend without Docker 
@@ -69,6 +73,8 @@ To check swagger documentation goto:
 http://127.0.0.1:3000/api
 or
 http://localhost:3000/api
+or
+http://your-domain:your-port/api
 
 ```
 
