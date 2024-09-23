@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:latest
@@ -26,6 +24,11 @@ services:
       - "5050:80"
     depends_on:
       - db
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   backend:
     build: ./backend
@@ -35,6 +38,23 @@ services:
       - db
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/nest
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # frontend:
+  #   build: ./frontend
+  #   ports:
+  #     - "3001:3000"
+  #   depends_on:
+  #     - backend
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
 
 volumes:
   postgres_data:

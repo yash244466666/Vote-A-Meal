@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { EmployeeService } from './employee.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiTags('employees')
@@ -12,6 +12,7 @@ export class EmployeeController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create an employee' })
   @ApiResponse({ status: 201, description: 'The employee has been successfully created.' })
   @ApiResponse({ status: 400, description: 'Bad Request.' })
@@ -36,19 +37,11 @@ export class EmployeeController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update an employee by ID' })
   @ApiResponse({ status: 200, description: 'The employee has been successfully updated.' })
   @ApiResponse({ status: 404, description: 'Employee not found.' })
   update(@Param('id') id: string, @Body() updateEmployeeDto: UpdateEmployeeDto) {
     return this.employeeService.update(id, updateEmployeeDto);
-  }
-
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard) 
-  @ApiOperation({ summary: 'Delete an employee by ID' })
-  @ApiResponse({ status: 200, description: 'The employee has been successfully deleted.' })
-  @ApiResponse({ status: 404, description: 'Employee not found.' })
-  remove(@Param('id') id: string) {
-    return this.employeeService.remove(id);
   }
 }

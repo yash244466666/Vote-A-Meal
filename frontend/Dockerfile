@@ -1,5 +1,5 @@
-# Use Node.js base image
-FROM node:18
+# Use a lightweight Node.js base image
+FROM node:18-alpine
 
 # Create app directory inside the container
 WORKDIR /app
@@ -8,10 +8,10 @@ WORKDIR /app
 COPY package.json package-lock.json /app/
 
 # Install dependencies
-RUN npm install
+RUN npm install 
 
 # Copy the rest of the app's source code
-COPY . /app
+COPY . .
 
 # Expose the port used by the app
 EXPOSE 3000

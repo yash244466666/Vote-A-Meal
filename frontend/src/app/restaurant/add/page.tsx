@@ -1,5 +1,5 @@
 import axios from 'axios';
-import AddRestaurantForm from '@/components/AddRestaurantForm';
+import AddRestaurantForm from '@/components/restaurant/AddRestaurantForm';
 
 export default async function RestaurantPage() {
   try {
