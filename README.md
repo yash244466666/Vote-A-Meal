@@ -1,5 +1,9 @@
 # Vote-A-Meal
-
+To check api documentation goto 
+http://127.0.0.1:3000/api
+or
+http://localhost:3000/api
+after starting the backend
 ## Setup your .env file
 ```bash
 ## setup your backend .env
