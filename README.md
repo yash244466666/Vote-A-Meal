@@ -10,7 +10,7 @@ $ docker-compose up --build
 
 ```bash
 ## cd into backend
-$ cd/backend
+$ cd backend/
 
 # install packages
 $ npm install
@@ -27,6 +27,22 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+```
+
+## Start Frontend 
+
+```bash
+# cd in frontend
+$ cd frontend/
+
+# Then, run the frontend server:
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
 
