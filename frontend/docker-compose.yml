@@ -1,0 +1,11 @@
+# frontend-docker/docker-compose.yml
+version: '3.8'
+
+services:
+  frontend:
+    build: ../frontend
+    ports:
+      - "3001:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+      # NEXT_PUBLIC_API_URL: http://backend:3000

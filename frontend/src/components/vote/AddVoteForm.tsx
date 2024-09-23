@@ -50,6 +50,7 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
       }
     };
 
+
     const fetchEmployees = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/employee`);
@@ -108,14 +109,25 @@ const VoteList = ({ initialData }: { initialData: Restaurant[] }) => {
       setEmployeeId(selectedEmployee.id);
     }
   };
+  
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3000); // Auto-hide after 3 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   return (
     <div className="p-4">
       {message && (
         <div
-          className={`mb-4 p-2 rounded ${
-            messageType === 'success' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'
-          }`}
+          className={`fixed top-20 left-1/2 transform -translate-x-1/2 mb-4 p-4 rounded-lg text-lg font-bold ${
+            messageType === 'success' ? 'bg-green-400 text-green-900' : 'bg-red-400 text-red-900'
+          } bg-white shadow-2xl`}
+          style={{ zIndex: 1000 }}
         >
           {message}
         </div>

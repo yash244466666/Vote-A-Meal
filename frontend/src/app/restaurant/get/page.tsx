@@ -1,5 +1,5 @@
 import axios from 'axios';
-import RestaurantList from '@/components/RestaurantList';
+import RestaurantList from '@/components/restaurant/RestaurantList';
 
 export default async function RestaurantPage() {
   try {

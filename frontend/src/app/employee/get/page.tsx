@@ -1,5 +1,5 @@
 import axios from 'axios';
-import EmployeeList from '@/components/EmployeeList';
+import EmployeeList from '@/components/employee/EmployeeList';
 
 export default async function EmployeePage() {
   try {

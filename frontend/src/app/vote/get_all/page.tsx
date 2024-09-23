@@ -1,4 +1,6 @@
-import Votes from '@/components/VoteList'
+
+
+import Votes from '@/components/vote/VoteList'
 
 function page() {
   return (
