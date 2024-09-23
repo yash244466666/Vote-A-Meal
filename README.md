@@ -34,6 +34,11 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 ```bash
 ## it will automatically create postgres, pgAdmin4, and start backend , and also seed your database
 $ docker-compose up --build
+
+To check swagger documentation goto:
+http://127.0.0.1:3000/api
+or
+http://localhost:3000/api
 ```
 
 ## Start Backend without Docker 
@@ -56,6 +61,11 @@ $ npx prisma migrate dev
 $ cd backend/
 $ npm run seed
 
+To check swagger documentation goto:
+http://127.0.0.1:3000/api
+or
+http://localhost:3000/api
+
 ```
 
 ## Start Frontend 
@@ -70,8 +80,6 @@ $ npm install
 npm run dev
 
 ```
-
-
 
 ## License
 
