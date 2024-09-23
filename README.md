@@ -102,7 +102,7 @@ npm run dev
 - Email: info@yashcodes.com
 - Website: https://www.yashcodes.com
 - Phone Number: +8801710008502
-- feel free to reach me for any clarification or any future projects
+- feel free to reach me for any clarification or about any future projects.
 
 ## License
 
