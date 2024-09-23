@@ -92,6 +92,18 @@ npm run dev
 
 ```
 
+## 👥 Authors <a name="authors"></a>
+
+👨‍🚀 **Yash**
+
+- GitHub: [Yash](https://github.com/yash244466666)
+- LinkedIn: [Yash](https://www.linkedin.com/in/yash-solo)
+- Twitter: [Yash](https://twitter.com/yash_solo000)
+- Email: info@yashcodes.com
+- Website: https://www.yashcodes.com
+- Phone Number: +8801710008502
+feel free to reach me for any clarification or any future projects
+
 ## License
 
 Nest is [MIT licensed](https://github.com/yash244466666/vote-a-meal/blob/master/LICENSE).
