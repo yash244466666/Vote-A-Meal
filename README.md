@@ -94,4 +94,4 @@ npm run dev
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Nest is [MIT licensed](https://github.com/yash244466666/vote-a-meal/blob/master/LICENSE).
