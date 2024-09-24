@@ -23,7 +23,8 @@ Please ensure that you are on a linux computer, windows have different file stru
 so in case you are on windows, you have to either edit the Dockerfile according to your system
 or you can run backend outside docker.
 by default admin username: 'yash' and the password:'1234' you can edit env for update this and
-you can edit the seed file located backend/prisma/seed.ts to add more admins, and make sure you did it before seed.
+you can edit the seed file located backend/prisma/seed.ts to add more admins, and 
+make sure you did it before seed.
 
 ## setup your backend .env
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
@@ -32,7 +33,12 @@ you can edit the seed file located backend/prisma/seed.ts to add more admins, an
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/nest?schema=public"
 
 ## setup your CORS, default is:
-CORS_ORIGIN="http://localhost:3001,http://127.0.0.1:3001,http://localhost:3000,http://27.0.0.1:3000,http://backend:3000/, http://backend:3001/"
+CORS_ORIGIN="http://localhost:3001,
+http://127.0.0.1:3001,
+http://localhost:3000,
+http://27.0.0.1:3000,
+http://backend:3000/,
+http://backend:3001/"
 
 ## setup your server bind address and port, default is:
 SERVER_BIND_ADDRESS="0.0.0.0"
