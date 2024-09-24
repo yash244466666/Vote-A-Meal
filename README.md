@@ -9,9 +9,10 @@ AFTER STARTING the backend
 
 ## Quick Video Guide of the project
 
-https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing
 
-[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing "Now in Android: 55")
+[<img src="https://github.com/yashSikdar/vote-a-meal/blob/master/project_home_page.png" width="50%">](https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing "Now in Android: 55")
+
+https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing
 
 ## Setup your .env file
 ```bash
