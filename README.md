@@ -16,6 +16,15 @@ https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=shari
 
 ## Setup your .env file
 ```bash
+## Please ensure 
+Please ensure that you have a postgres running on postgres default port 5432
+you can you use docker for it or you can have run postgres directly into your mechine.
+Please ensure that you are on a linux computer, windows have different file structure
+so in case you are on windows, you have to either edit the Dockerfile according to your system
+or you can run backend outside docker.
+by default admin username: 'yash' and the password:'1234' 
+you can edit the seed file located backend/prisma/seed.ts to add or update admin, and make sure you did it before seed.
+
 ## setup your backend .env
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
 
@@ -87,7 +96,10 @@ http://your-domain:your-port/api
 
 ## Please ensure 
 Please ensure that you have a postgres running on postgres default port 5432
-you can you docker for it or you can have run postgres directly into your mechine.
+you can you use docker for it or you can have run postgres directly into your mechine.
+Please ensure that you are on a linux computer, windows have different file structure
+so in case you are on windows, you have to either edit the Dockerfile according to your system
+or you can run backend outside docker.
 
 
 ```
