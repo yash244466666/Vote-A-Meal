@@ -85,6 +85,11 @@ http://localhost:3000/api
 or
 http://your-domain:your-port/api
 
+## Please ensure 
+Please ensure that you have a postgres running on postgres default port 5432
+you can you docker for it or you can have run postgres directly into your mechine.
+
+
 ```
 
 ## Start Frontend 
