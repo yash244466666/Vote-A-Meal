@@ -22,8 +22,8 @@ you can you use docker for it or you can have run postgres directly into your me
 Please ensure that you are on a linux computer, windows have different file structure
 so in case you are on windows, you have to either edit the Dockerfile according to your system
 or you can run backend outside docker.
-by default admin username: 'yash' and the password:'1234' 
-you can edit the seed file located backend/prisma/seed.ts to add or update admin, and make sure you did it before seed.
+by default admin username: 'yash' and the password:'1234' you can edit env for update this and
+you can edit the seed file located backend/prisma/seed.ts to add more admins, and make sure you did it before seed.
 
 ## setup your backend .env
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## 
