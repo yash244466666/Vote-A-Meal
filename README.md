@@ -6,6 +6,13 @@ http://localhost:3000/api
 or
 http://your-domain:your-port/api
 AFTER STARTING the backend
+
+## Quick Video Guide of the project
+
+https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing
+
+[<img src="https://i.ytimg.com/vi/Hc79sDi3f0U/maxresdefault.jpg" width="50%">](https://drive.google.com/file/d/1KkOr8J6GkHNaKh7uaf_R3SUSr5wG_RkR/view?usp=sharing "Now in Android: 55")
+
 ## Setup your .env file
 ```bash
 ## setup your backend .env
